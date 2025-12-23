@@ -145,27 +145,13 @@ STATICFILES_DIRS = [
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# settings.py
-
-# Basic Email Configuration
-# Email Configuration
-# EMAIL SETTINGS (Debugging)
-import os
-
-# Email Configuration (Using Brevo)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp-relay.brevo.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_TIMEOUT = 10
-
-# Your login email for Brevo (NOT your Gmail unless you used it to sign up)
+EMAIL_TIMEOUT = 20
 EMAIL_HOST_USER = 'mittalhardik2007@gmail.com' 
-
-# This reads the secret key from Render
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-
-# Optional: Ensure the email appears to come from your verified Brevo address
 DEFAULT_FROM_EMAIL = 'mittalhardik2007@gmail.com'
 
 if not EMAIL_HOST_USER:
