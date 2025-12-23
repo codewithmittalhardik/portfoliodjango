@@ -25,7 +25,7 @@ def home(request):
                     subject,
                     email_message,
                     settings.EMAIL_HOST_USER,
-                    ['mittalhardik2007@gmail.com'],
+                    ['hardikmittal230407@gmail.com'],
                     fail_silently=False,
                 )
                 messages.success(request, 'Your message has been sent successfully!')
