@@ -150,18 +150,23 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # Basic Email Configuration
 # Email Configuration
 # EMAIL SETTINGS (Debugging)
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 465                # <--- CHANGED to 465
-EMAIL_USE_TLS = False           # <--- CHANGED to False
-EMAIL_USE_SSL = True            # <--- CHANGED to True (Required for Port 465)
-EMAIL_TIMEOUT = 20                # <--- INCREASED: 10s was too short
-# Change 'EMAIL_USER' to 'EMAIL_HOST_USER'
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+import os
 
-# Change 'EMAIL_PASS' to 'EMAIL_HOST_PASSWORD'
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-# ... under your EMAIL_HOST_PASSWORD line ...
+# Email Configuration (Using Brevo)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp-relay.brevo.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_TIMEOUT = 10
+
+# Your login email for Brevo (NOT your Gmail unless you used it to sign up)
+EMAIL_HOST_USER = 'mittalhardik2007@gmail.com' 
+
+# This reads the secret key from Render
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+
+# Optional: Ensure the email appears to come from your verified Brevo address
+DEFAULT_FROM_EMAIL = 'mittalhardik2007@gmail.com'
 
 if not EMAIL_HOST_USER:
     print("CRITICAL ERROR: Email User is missing/empty!")
