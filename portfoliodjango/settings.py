@@ -148,11 +148,13 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # settings.py
 
 # Basic Email Configuration
+# Email Configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.googlemail.com'  # <--- CHANGED: Better compatibility
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
+EMAIL_USE_SSL = False               # <--- Explicitly set this to False
+EMAIL_TIMEOUT = 30                  # <--- INCREASED: 10s was too short
 # Change 'EMAIL_USER' to 'EMAIL_HOST_USER'
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 
@@ -167,5 +169,3 @@ if not EMAIL_HOST_PASSWORD:
     print("CRITICAL ERROR: Email Password is missing/empty!")
 else:
     print(f"DEBUG: Password length is {len(EMAIL_HOST_PASSWORD)} characters")
-
-EMAIL_TIMEOUT = 10
