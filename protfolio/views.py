@@ -8,15 +8,12 @@ def home(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            # 1. Save to Database (Backup in case email fails)
             form.save()
             
             # 2. Get the data
             name = form.cleaned_data['name']
             email = form.cleaned_data['email']
             message = form.cleaned_data['message']
-            
-            # 3. Send the Email
             subject = f"New Portfolio Message from {name}"
             email_message = f"You received a new message:\n\nName: {name}\nEmail: {email}\n\nMessage:\n{message}"
             
@@ -29,13 +26,8 @@ def home(request):
                     fail_silently=False,
                 )
                 messages.success(request, 'Your message has been sent successfully!')
-            
-            # This is the part I changed for you:
             except Exception as exc:
-                # We print the error to the console (logs) so YOU can see it
                 print(f"Error sending email: {exc}")
-                
-                # We show a clean, friendly message to the USER
                 messages.error(request, 'Messaging is not available right now. Please try again later.')
 
             return redirect('index')
