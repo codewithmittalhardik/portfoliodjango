@@ -143,5 +143,8 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
-EMAIL_HOST_USER = os.getenv('EMAIL_USER')  # Reads from .env
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASS')  # Reads from .env
+# Change 'EMAIL_USER' to 'EMAIL_HOST_USER'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+
+# Change 'EMAIL_PASS' to 'EMAIL_HOST_PASSWORD'
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
