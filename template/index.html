@@ -245,7 +245,7 @@
                     </div>
                 </div>
 
-                <form action="" method="POST" class="form" id="contactForm" novalidate>
+                <form method="POST" class="form" id="contactForm" novalidate>
                     {% csrf_token %}
 
                     <h3 style="margin-bottom:1rem">Send Me a Message</h3>
@@ -253,7 +253,7 @@
                     {% if messages %}
                     {% for message in messages %}
                     <div
-                        style="background-color: #ffe6e6; color: #cc0000; padding: 1rem; margin-bottom: 1rem; border-radius: 8px; border: 1px solid #ff9999;">
+                        style="background-color: #d1e7dd; color: #0f5132; padding: 1rem; margin-bottom: 1rem; border-radius: 8px; border: 1px solid #badbcc;">
                         {{ message }}
                     </div>
                     {% endfor %}

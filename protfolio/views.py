@@ -9,20 +9,25 @@ def home(request):
         form = ContactForm(request.POST)
         if form.is_valid():
             form.save()
-            
+
             # 2. Get the data
             name = form.cleaned_data['name']
             email = form.cleaned_data['email']
             message = form.cleaned_data['message']
             subject = f"New Portfolio Message from {name}"
             email_message = f"You received a new message:\n\nName: {name}\nEmail: {email}\n\nMessage:\n{message}"
-            
+
+            # If email credentials are missing, inform the user instead of throwing.
+            if not settings.EMAIL_HOST_USER or not settings.EMAIL_HOST_PASSWORD:
+                messages.error(request, 'Messaging is not available right now. Please try again later.')
+                return redirect('index')
+
             try:
                 send_mail(
                     subject,
                     email_message,
-                    settings.EMAIL_HOST_USER,
-                    ['mittalhardik2007@gmail.com'],
+                    settings.DEFAULT_FROM_EMAIL,
+                    ['hardikmittal230407@gmail.com'],
                     fail_silently=False,
                 )
                 messages.success(request, 'Your message has been sent successfully!')
