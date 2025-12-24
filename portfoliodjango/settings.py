@@ -146,21 +146,17 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Email Settings (Gmail SMTP)
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"  # send real emails via SMTP
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_TIMEOUT = 30
 EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
-DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_USER')
+DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_USER', 'mittalhardik2007@gmail.com')
 
-# SendGrid configuration (use this for production on Render)
+# SendGrid API Key (optional - will be used instead of SMTP if available)
 SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
-if SENDGRID_API_KEY:
-    EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
-    EMAIL_HOST_USER = os.environ.get('EMAIL_USER', 'mittalhardik2007@gmail.com')
-    DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 if not EMAIL_HOST_USER:
     print("CRITICAL ERROR: Email User is missing/empty!")
@@ -169,6 +165,6 @@ if not EMAIL_HOST_PASSWORD and not SENDGRID_API_KEY:
     print("CRITICAL ERROR: Email Password and SendGrid API Key are both missing!")
 else:
     if EMAIL_HOST_PASSWORD:
-        print(f"DEBUG: Password length is {len(EMAIL_HOST_PASSWORD)} characters")
+        print(f"DEBUG: Gmail SMTP configured (password length: {len(EMAIL_HOST_PASSWORD)} characters)")
     if SENDGRID_API_KEY:
-        print(f"DEBUG: Using SendGrid API Key")
+        print(f"DEBUG: SendGrid API configured")

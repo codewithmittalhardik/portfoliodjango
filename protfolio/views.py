@@ -7,6 +7,22 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+def send_email_via_sendgrid(subject, message, from_email, to_emails):
+    """Send email using SendGrid API directly"""
+    from sendgrid import SendGridAPIClient
+    from sendgrid.helpers.mail import Mail
+    
+    sg_message = Mail(
+        from_email=from_email,
+        to_emails=to_emails,
+        subject=subject,
+        plain_text_content=message
+    )
+    
+    sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+    response = sg.send(sg_message)
+    return response
+
 def home(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -31,13 +47,26 @@ def home(request):
 
             try:
                 logger.info(f"Attempting to send email from {settings.DEFAULT_FROM_EMAIL}")
-                send_mail(
-                    subject,
-                    email_message,
-                    settings.DEFAULT_FROM_EMAIL,
-                    ['hardikmittal230407@gmail.com'],
-                    fail_silently=False,
-                )
+                
+                # Use SendGrid if API key is available, otherwise use SMTP
+                if getattr(settings, 'SENDGRID_API_KEY', None):
+                    logger.info("Using SendGrid API")
+                    send_email_via_sendgrid(
+                        subject,
+                        email_message,
+                        settings.DEFAULT_FROM_EMAIL,
+                        ['hardikmittal230407@gmail.com']
+                    )
+                else:
+                    logger.info("Using SMTP")
+                    send_mail(
+                        subject,
+                        email_message,
+                        settings.DEFAULT_FROM_EMAIL,
+                        ['hardikmittal230407@gmail.com'],
+                        fail_silently=False,
+                    )
+                
                 logger.info("Email sent successfully!")
                 messages.success(request, 'Your message has been sent successfully!')
             except Exception as exc:
