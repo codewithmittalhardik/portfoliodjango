@@ -62,30 +62,26 @@ To view or modify this project locally, follow these steps:
     * Run python3 manage.py runserver on Your Terminal.
 
 ## 📂 Project Structure
-.
-├── .DS_Store
-├── .gitignore
-├── db.sqlite3
-├── manage.py
-├── requirement.txt
-├── portfoliodjango/
-│   ├── __init__.py
+
+```bash
+hardikportfolio/
+├── manage.py            # Django command-line utility
+├── requirement.txt      # List of dependencies
+├── db.sqlite3           # Database file
+├── portfoliodjango/     # Project Configuration
 │   ├── asgi.py
-│   ├── settings.py
-│   ├── urls.py
+│   ├── settings.py      # Main settings (DB, Apps, Middleware)
+│   ├── urls.py          # Project-level URL routing
 │   └── wsgi.py
-├── protfolio/
-│   ├── __init__.py
-│   ├── admin.py
-│   ├── apps.py
-│   ├── forms.py
-│   ├── models.py
-│   ├── tests.py
-│   ├── urls.py
-│   └── views.py
-├── static/
+├── protfolio/           # Main Application (App Logic)
+│   ├── admin.py         # Admin panel configuration
+│   ├── forms.py         # Form handling
+│   ├── models.py        # Database models
+│   ├── urls.py          # App-level URL routing
+│   └── views.py         # View logic (Render templates)
+├── static/              # Static files (CSS, JS, Images)
 │   ├── css/
 │   ├── images/
 │   └── js/
-└── template/
-    └── index.html
+└── template/            # HTML Templates
+    └── index.html       # Main landing page
