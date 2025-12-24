@@ -155,10 +155,20 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
 DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_USER')
 
+# SendGrid configuration (use this for production on Render)
+SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
+if SENDGRID_API_KEY:
+    EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
+    EMAIL_HOST_USER = os.environ.get('EMAIL_USER', 'mittalhardik2007@gmail.com')
+    DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 if not EMAIL_HOST_USER:
     print("CRITICAL ERROR: Email User is missing/empty!")
 
-if not EMAIL_HOST_PASSWORD:
-    print("CRITICAL ERROR: Email Password is missing/empty!")
+if not EMAIL_HOST_PASSWORD and not SENDGRID_API_KEY:
+    print("CRITICAL ERROR: Email Password and SendGrid API Key are both missing!")
 else:
-    print(f"DEBUG: Password length is {len(EMAIL_HOST_PASSWORD)} characters")
+    if EMAIL_HOST_PASSWORD:
+        print(f"DEBUG: Password length is {len(EMAIL_HOST_PASSWORD)} characters")
+    if SENDGRID_API_KEY:
+        print(f"DEBUG: Using SendGrid API Key")
