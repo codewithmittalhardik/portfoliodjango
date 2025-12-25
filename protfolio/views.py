@@ -51,12 +51,16 @@ def home(request):
                 # Use SendGrid if API key is available, otherwise use SMTP
                 if getattr(settings, 'SENDGRID_API_KEY', None):
                     logger.info("Using SendGrid API")
-                    send_email_via_sendgrid(
+                    response = send_email_via_sendgrid(
                         subject,
                         email_message,
                         settings.DEFAULT_FROM_EMAIL,
                         ['hardikmittal230407@gmail.com']
                     )
+                    logger.info(f"SendGrid response: {response.status_code}")
+                    
+                    if response.status_code not in [200, 201, 202]:
+                        raise Exception(f"SendGrid returned status code {response.status_code}")
                 else:
                     logger.info("Using SMTP")
                     send_mail(
@@ -71,7 +75,11 @@ def home(request):
                 messages.success(request, 'Your message has been sent successfully!')
             except Exception as exc:
                 logger.error(f"Error sending email: {exc}", exc_info=True)
-                messages.error(request, 'Messaging is not available right now. Please try again later.')
+                # Show the actual error to help debugging
+                if settings.DEBUG:
+                    messages.error(request, f'Email error: {str(exc)}')
+                else:
+                    messages.error(request, 'Messaging is not available right now. Please try again later.')
 
             return redirect('index')
     else:
