@@ -58,7 +58,7 @@ To view or modify this project locally, follow these steps:
     cd hardikportfolio
     ```
 
-3.  **Instal dependency**
+3.  **Install dependency**
     ```bash
     pip install -r requirement.txt
     ```
