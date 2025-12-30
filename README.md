@@ -58,10 +58,14 @@ To view or modify this project locally, follow these steps:
     cd hardikportfolio
     ```
 
-3.  **Open the project**
-    * Run pip install -r requirement.txt.
-    * After Downloading all packages then 
-    * Run python3 manage.py runserver on Your Terminal.
+3.  **Instal dependency**
+   ```bash
+    * pip install -r requirement.txt
+   ```
+4.  ** Copy & Paste in your Terminal to run**
+   ```bash
+    * python3 manage.py runserver
+   ```
 
 ## 📂 Project Structure
 
