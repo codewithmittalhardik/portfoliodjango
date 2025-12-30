@@ -65,7 +65,7 @@ To view or modify this project locally, follow these steps:
 
 ## 📂 Project Structure
 
-```bash
+```text
 hardikportfolio/
 ├── manage.py            # Django command-line utility
 ├── requirement.txt      # List of dependencies
@@ -87,3 +87,4 @@ hardikportfolio/
 │   └── js/
 └── template/            # HTML Templates
     └── index.html       # Main landing page
+```
